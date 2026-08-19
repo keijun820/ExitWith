@@ -1,40 +1,57 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-//This is made by Bobsi Unity - Youtube
 public class PlayerController : MonoBehaviour
 {
-    [Header("Base setup")]
-    public float walkingSpeed = 7.5f;
-    public float jumpSpeed = 8.0f;
-    public float gravity = 20.0f;
-    public float lookSpeed = 2.0f;
-    public float lookXLimit = 45.0f;
+    float walkingSpeed = 10f;
+    float jumpSpeed = 8.0f;
+    float gravity = 20.0f;
+    float lookSpeed = 2.0f;
+    float lookXLimit = 45.0f;
 
-    CharacterController characterController;
+    [SerializeField] CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     float rotationX = 0;
+    [SerializeField] Camera playerCamera;
+    [SerializeField] Camera kidCamera;
+    public bool kidControlling;
 
-    [SerializeField]
-    private float cameraYOffset = 0.4f;
-    private Camera playerCamera;
+    [SerializeField] MeshRenderer mesh;
 
 
     public void Start()
     {
         characterController = GetComponent<CharacterController>();
 
-        playerCamera = Camera.main;
-        playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYOffset, transform.position.z);
-        playerCamera.transform.SetParent(transform);
+        kidControlling = false;
     }
 
     void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab)) kidControlling = !kidControlling;
+        mesh.enabled = kidControlling;
+        playerCamera.enabled = !kidControlling;
+        kidCamera.enabled = kidControlling;
+        if (kidControlling)
+        {
+            moveDirection.x = 0;
+            moveDirection.z = 0;
+            if (!characterController.isGrounded) moveDirection.y -= gravity * Time.deltaTime;
+
+            characterController.Move(moveDirection * Time.deltaTime);
+            return;
+        }
+        Control();
+    }
+
+    void Control()
     {
         // We are grounded, so recalculate move direction based on axis
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        float curSpeedX = walkingSpeed *Input.GetAxis("Vertical");
+        float curSpeedX = walkingSpeed * Input.GetAxis("Vertical");
         float curSpeedY = walkingSpeed * Input.GetAxis("Horizontal");
         float movementDirectionY = moveDirection.y;
         moveDirection = (forward * curSpeedX) + (right * curSpeedY);
@@ -53,7 +70,6 @@ public class PlayerController : MonoBehaviour
             moveDirection.y -= gravity * Time.deltaTime;
         }
 
-        // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
 
         // Player and Camera rotation
