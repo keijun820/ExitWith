@@ -3,32 +3,30 @@ using UnityEngine;
 public class CameraSkill : MonoBehaviour
 {
     [Header("레이캐스트 설정")]
-    public float rayDistance = 5f; // 레이를 쏠 거리
-    public LayerMask interactableLayer; // 감지할 오브젝트의 레이어
+    float rayDistance = 5f; // 레이를 쏠 거리
 
-    public GameObject currentTarget; // 현재 바라보고 있는 오브젝트
-
-    public GameObject targetObject;
-    public GameObject saveObject;
-
+    GameObject currentTarget; // 현재 바라보고 있는 오브젝트
+    GameObject targetObject;
+    GameObject saveObject;
+    [SerializeField] LayerMask InteractableLayer;
     private Vector3 savedPosition;
     private Quaternion savedRotation;
     private Vector3 savedScale;
-    private bool hasSavedData = false;
+    bool hasSavedData = false;
+
+    [SerializeField] Transform cam;
 
     void Update()
     {
         // 바라보는 방향으로 레이캐스트 생성
-        Ray ray = new Ray(transform.position, transform.forward);
+        Ray ray = new Ray(cam.position, cam.forward);
         RaycastHit hit;
 
-        // 디버그용 선 그리기 (게임 뷰에서는 안 보이고 씬 뷰에서만 보임)
-        Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.red);
-
         // 레이캐스트 발사
-        if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer))
+        if (Physics.Raycast(ray, out hit, rayDistance, InteractableLayer))
         {
             GameObject hitObject = hit.collider.gameObject;
+            Debug.Log(hitObject.name);
 
             // 새로운 오브젝트를 바라보게 되었을 때
             if (hitObject != currentTarget)
@@ -44,7 +42,7 @@ public class CameraSkill : MonoBehaviour
             ClearHighlight();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetMouseButtonDown(0))
         {
             if(currentTarget != null)
             {
@@ -52,7 +50,7 @@ public class CameraSkill : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(1))
         {
             SpawnObjectFromSave();
         }
@@ -94,17 +92,12 @@ public class CameraSkill : MonoBehaviour
         saveObject = targetObject;
 
         hasSavedData = true;
-        Debug.Log("찰칵");
     }
 
     private void SpawnObjectFromSave()
     {
         // E키로 저장한 적이 없다면 생성하지 않음
-        if (!hasSavedData)
-        {
-            Debug.LogWarning("찍어놓은 오브젝트가 없음");
-            return;
-        }
+        if (!hasSavedData) return;
 
         // 찍어놓은 오브젝트 생성
         GameObject newObject = Instantiate(saveObject, savedPosition, savedRotation);

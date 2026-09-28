@@ -3,10 +3,16 @@ using UnityEngine.UI;
 
 public class itemSelect : MonoBehaviour
 {
+    //1repoerter 2soldier 3scientist 4mirror
     [SerializeField] GameObject[] BG; //0 now 1 next 2 prev
     [SerializeField] Image[] itemSlotImage;
     [SerializeField] Sprite[] itemImages;
     [SerializeField] bool[] itemList;
+
+    [SerializeField] CameraSkill _cameraSkill;
+    [SerializeField] Soldier _soldier;
+    [SerializeField] Scientist _scientist;
+    [SerializeField] PutMirror _putMirror;
     int marker;
 
     int itemNumber = 9;
@@ -20,8 +26,6 @@ public class itemSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J)) showItems();
-
         float scroll = Input.mouseScrollDelta.y;
         if (scroll == 0f) return;
 
@@ -54,6 +58,16 @@ public class itemSelect : MonoBehaviour
         {
             BG[0].SetActive(true);
             itemSlotImage[0].sprite = itemImages[now];
+
+            if (now == 0) _cameraSkill.enabled = true;
+            else _cameraSkill.enabled = false;
+            if (now == 1) _soldier.enabled = true;
+            else _soldier.enabled = false;
+            if (now == 2) _scientist.enabled = true;
+            else _scientist.enabled = false;
+            if (now == 3) _putMirror.enabled = true;
+            else _putMirror.enabled = false;
+
             if(next != -1)
             {
                 BG[1].SetActive(true);
