@@ -1156,7 +1156,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 7d4837604f269cf47b44bd76c6024195, type: 3}
   - {fileID: 21300000, guid: e216af4f67967fc43bf57926feb38836, type: 3}
   - {fileID: 21300000, guid: 42a71dcf1c918234ca86757b5171c872, type: 3}
-  itemList: 010101010101010101
+  itemList: 000000000000000000
   _cameraSkill: {fileID: 934572824}
   _soldier: {fileID: 934572825}
   _scientist: {fileID: 934572826}
@@ -1744,8 +1744,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82899d6f7463ffc4abce1e8c8f770bb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PutMirror
-  _MirrorObject: {fileID: 2604736328532829929, guid: b48fb07f2e177fa45be7f27cfc6f526c, type: 3}
-  mats: []
 --- !u!1 &1025210592
 GameObject:
   m_ObjectHideFlags: 0
