@@ -1,7 +1,6 @@
 using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
 public class KidController : MonoBehaviour
 {
