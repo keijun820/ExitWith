@@ -64,4 +64,10 @@ public class Mirror : MonoBehaviour
         if (cols.Length > 0) return cols[0].transform;
         return null;
     }
+
+    public void deleteMirror()
+    {
+        Destroy(oppoMirror);
+        Destroy(transform.parent.gameObject);
+    }
 }

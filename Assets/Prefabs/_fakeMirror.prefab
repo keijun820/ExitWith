@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 4620093807683845986}
   - component: {fileID: 5475157411534134007}
   - component: {fileID: 1518654485071164634}
-  - component: {fileID: 2990451173926654426}
   m_Layer: 0
   m_Name: fakeMirror
   m_TagString: Untagged
@@ -141,18 +140,3 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!114 &2990451173926654426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6707180482073769362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58fb41eb459d7a748a78fde1bdf9d08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Mirror
-  oppoMirror: {fileID: 0}
-  isWarfed: 0
-  warfTimer: 0

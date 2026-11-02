@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6187332743306088482}
   - component: {fileID: 7595272344641393010}
   - component: {fileID: 91922913636644205}
+  - component: {fileID: 2841533002639634416}
   m_Layer: 0
   m_Name: Mirror
   m_TagString: Untagged
@@ -124,6 +125,27 @@ MonoBehaviour:
   oppoMirror: {fileID: 0}
   isWarfed: 0
   warfTimer: 0
+--- !u!65 &2841533002639634416
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684557927946205566}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01999366, y: 0.011797, z: 0.029993666}
+  m_Center: {x: 0, y: -0.00202912, z: 0}
 --- !u!1 &7205699597157755747
 GameObject:
   m_ObjectHideFlags: 0

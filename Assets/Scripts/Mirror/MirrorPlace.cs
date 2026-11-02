@@ -33,10 +33,11 @@ public class MirrorPlace : MonoBehaviour
         oppoPlace.isLooking(oppoPlace.transform.position + lookPoint - transform.position, true);
     }
 
-    public void noLook()
+    public void noLook(bool isLooking = true)
     {
         Destroy(fakeMirror);
         fakeMirror = null;
+        if (isLooking) oppoPlace.noLook(false);
     }
 
     public GameObject placeMirror(GameObject oppoMirror = null)
@@ -54,10 +55,5 @@ public class MirrorPlace : MonoBehaviour
         }
         placedMirror.GetComponentInChildren<Mirror>().oppoMirror = oppoPlace.placeMirror(placedMirror);
         return placedMirror;
-    }
-
-    public void deleteMirror()
-    {
-        
     }
 }

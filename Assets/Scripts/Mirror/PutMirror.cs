@@ -48,10 +48,16 @@ public class PutMirror : MonoBehaviour
     void rayMirror()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2.5f))
         {
-            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("Mirror")) return;
-            if (Input.GetKeyDown(KeyCode.E)) lookingMirrorPlace.deleteMirror();
+            if (hit.collider.gameObject.TryGetComponent<Mirror>(out Mirror _mirror))
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _mirror.deleteMirror();
+                    mirrorPlaced = false;
+                }
+            }
         }
     }
 
