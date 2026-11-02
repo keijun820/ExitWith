@@ -1,37 +1,64 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class PutMirror : MonoBehaviour
 {
-    [SerializeField] GameObject _MirrorObject;
-    [SerializeField] Material[] mats;
-    GameObject lookedPlace;
+    [SerializeField] Transform cam;
+    MirrorPlace lookingMirrorPlace;
+    bool mirrorPlaced;
 
+    void Start()
+    {
+        mirrorPlaced = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
     // Update is called once per frame
     void Update()
     {
+        if (mirrorPlaced) rayMirror();
+        else rayMirrorPlace();
+    }
+
+    void rayMirrorPlace()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f))
+        if (Physics.Raycast(cam.position, cam.forward, out hit, 2.5f))
         {
-            GameObject targetObject = hit.collider.gameObject;
-            if(lookedPlace != null && targetObject != lookedPlace)
+            if (hit.collider.gameObject.layer != LayerMask.NameToLayer("MirrorPlace"))
             {
-                lookedPlace.GetComponent<MeshRenderer>().material = mats[0];
-                lookedPlace = null;
+                if (lookingMirrorPlace != null) lookingMirrorPlace.noLook();
+                lookingMirrorPlace = null;
+                return;
             }
-            if(targetObject.layer == LayerMask.NameToLayer("MirrorPlace")) lookedPlace = targetObject;
-            lookedPlace.GetComponent<MeshRenderer>().material = mats[1];
+            lookingMirrorPlace = hit.collider.gameObject.GetComponent<MirrorPlace>();
+            lookingMirrorPlace.isLooking(hit.point);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                lookingMirrorPlace.placeMirror();
+                mirrorPlaced = true;
+            }
         }
-        else if(lookedPlace != null)
+        else
         {
-            lookedPlace.GetComponent<MeshRenderer>().material = mats[0];
-            lookedPlace = null;
-        }
-
-        if(lookedPlace != null && Input.GetMouseButtonDown(0))
-        {
-
+            if (lookingMirrorPlace != null) lookingMirrorPlace.noLook();
+            lookingMirrorPlace = null;
         }
     }
+
+    void rayMirror()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 2.5f))
+        {
+            if (hit.collider.gameObject.TryGetComponent<Mirror>(out Mirror _mirror))
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _mirror.deleteMirror();
+                    mirrorPlaced = false;
+                }
+            }
+        }
+    }
+
 }
