@@ -81,8 +81,22 @@ public class itemSelect : MonoBehaviour
         }
     }
 
-    public void updateItemList()
+    public void updateItemList(string itemName, bool isAdd)
     {
+        int index = -1;
+        if (itemName == "카메라") index = 0;
+        else if (itemName == "총") index = 1;
+        else if (itemName == "자석") index = 2;
+        else if (itemName == "거울") index = 3;
+        else if (itemName == "붕대") index = 4;
+        else if (itemName == "나무판자") index = 5;
+        else if (itemName == "망치") index = 6;
+        else if (itemName == "손전등") index = 7;
+        else if (itemName == "풍선") index = 8;
 
+        if (isAdd) itemList[index] = true;
+        else itemList[index] = false;
+
+        showItems();
     }
 }

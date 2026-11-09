@@ -15,22 +15,9 @@ public class Scientist : MonoBehaviour
     public float pullSpeed = 10f;         // 오브젝트가 고정 위치로 이동하는 속도
     public LayerMask magneticLayer;       // 철 오브젝트가 속한 레이어
 
-    private CharacterController characterController;
-    private Vector3 moveDirection = Vector3.zero;
-    private float rotationX = 0;
-
-    [SerializeField]
-    private float cameraYOffset = 0.4f;
     public Camera playerCamera;
 
     private Rigidbody heldObject = null; // 현재 끌어당기고 있는 오브젝트
-
-    void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-
-     
-    }
 
     void Update()
     {

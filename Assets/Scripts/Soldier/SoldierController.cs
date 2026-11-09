@@ -13,21 +13,9 @@ public class SoldierController : MonoBehaviour
     public float pushForce = 10f;        // 오브젝트를 밀어내는 힘
     public LayerMask hittableLayers;     // 레이캐스트가 맞을 레이어 (몬스터, 오브젝트 등)
 
-    private CharacterController characterController;
-    private Vector3 moveDirection = Vector3.zero; // 시작 좌표 정하는 거
-    private float rotationX = 0;
-
-    // 임시 카메라 각도
-    private float cameraYOffset = 0.4f;
     public Camera playerCamera;
 
     private float lastFireTime = -999f; // 마지막으로 발사한 시각? 시점? 저장 (쿨타임 계산용~~) (아직 미정)
-
-    void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-
-    }
 
     void Update()
     {

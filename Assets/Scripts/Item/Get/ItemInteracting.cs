@@ -14,14 +14,13 @@ public class ItemInteractor : MonoBehaviour
     [Header("인벤토리")]
     public SimpleInventory inventory; // 습득한 아이템을 넣을 인벤토리 (인스펙터에서 플레이어를 연결)
 
+    [SerializeField] Transform cam;
+
     void Update()
     {
         // 바라보는 방향으로 레이캐스트 생성
-        Ray ray = new Ray(transform.position, transform.forward);
+        Ray ray = new Ray(cam.position, cam.forward);
         RaycastHit hit;
-
-        // 디버그용 선 그리기 (게임 뷰에서는 안 보이고 씬 뷰에서만 보임)
-        Debug.DrawRay(transform.position, transform.forward * rayDistance, Color.red);
 
         // 레이캐스트 발사
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer))

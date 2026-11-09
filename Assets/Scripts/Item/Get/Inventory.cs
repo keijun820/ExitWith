@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // 아주 단순한 인벤토리: 일반 아이템은 이름 리스트로, 열쇠는 별도 리스트로 관리합니다.
@@ -15,6 +16,8 @@ public class SimpleInventory : MonoBehaviour
     // 지금까지 습득한 "서로 다른 열쇠"들의 이름 목록. 각 열쇠는 용도가 다르므로 개별 관리.
     // (예: "창고 열쇠", "서재 열쇠" 등)
     public List<string> keys = new List<string>();
+
+    [SerializeField] itemSelect _itemSelect;
 
     // 화면에 표시할 때 쓸 이름: 열쇠가 0개면 없음, 1개면 그 열쇠 이름 그대로,
     // 2개 이상이면 "열쇠 꾸러미"로 뭉뚱그려 보여줌. 내부적으로는 keys 리스트에 각 열쇠가 그대로 남아있음.
@@ -38,6 +41,7 @@ public class SimpleInventory : MonoBehaviour
         if (string.IsNullOrEmpty(itemName)) return false;
 
         items.Add(itemName); // 슬롯이 하나 늘어남
+        _itemSelect.updateItemList(itemName, true);
         Debug.Log($"{itemName} 획득! 현재 슬롯 수: {items.Count}");
         return true;
     }
@@ -49,7 +53,10 @@ public class SimpleInventory : MonoBehaviour
     {
         bool removed = items.Remove(itemName); // 리스트에서 하나 제거 → 슬롯이 그만큼 줄어듦
         if (removed)
+        {
+            _itemSelect.updateItemList(itemName, false);
             Debug.Log($"{itemName} 사용! 현재 슬롯 수: {items.Count}");
+        }
         else
             Debug.Log($"{itemName} 을(를) 가지고 있지 않습니다.");
         return removed;
