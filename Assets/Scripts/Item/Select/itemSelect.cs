@@ -10,7 +10,7 @@ public class itemSelect : MonoBehaviour
     [SerializeField] bool[] itemList;
 
     [SerializeField] CameraSkill _cameraSkill;
-    [SerializeField] Soldier _soldier;
+    [SerializeField] SoldierController _soldier;
     [SerializeField] Scientist _scientist;
     [SerializeField] PutMirror _putMirror;
     int marker;
