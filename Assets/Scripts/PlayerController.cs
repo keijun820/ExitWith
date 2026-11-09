@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab)) kidControlling = !kidControlling;
-        mesh.enabled = kidControlling;
+        //mesh.enabled = kidControlling;
         playerCamera.enabled = !kidControlling;
         kidCamera.enabled = kidControlling;
         if (kidControlling)
