@@ -1,10 +1,9 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    float walkingSpeed = 7f;
+    float walkingSpeed = 10f;
     float jumpSpeed = 8.0f;
     float gravity = 20.0f;
     float lookSpeed = 2.0f;
@@ -19,12 +18,14 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] MeshRenderer mesh;
 
+    // 아이와 첫 대화를 마쳤는지 (Tab, Q 사용 가능 여부)
+    bool AbilitiesUnlocked => GameProgress.Instance != null && GameProgress.Instance.AbilitiesUnlocked;
+
+    // 대화창이 열려 있는지 (열려 있으면 이동/조작 정지)
+    bool InDialogue => DialogueManager.Instance != null && DialogueManager.Instance.IsOpen;
 
     public void Start()
     {
-       // Cursor.lockState = CursorLockMode.Locked;
-       // Cursor.visible = false;
-
         characterController = GetComponent<CharacterController>();
 
         kidControlling = false;
@@ -32,11 +33,19 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) kidControlling = !kidControlling;
+        // Tab, Q는 아이와 대화한 뒤에만, 그리고 대화 중이 아닐 때만 동작
+        if (AbilitiesUnlocked && !InDialogue)
+        {
+            if (Input.GetKeyDown(KeyCode.Tab)) kidControlling = !kidControlling;
+            if (Input.GetKeyDown(KeyCode.Q)) OnQPressed();
+        }
+
         mesh.enabled = kidControlling;
         playerCamera.enabled = !kidControlling;
         kidCamera.enabled = kidControlling;
-        if (kidControlling)
+
+        // 아이 조종 중이거나 대화 중이면 플레이어는 제자리 (중력만 적용)
+        if (kidControlling || InDialogue)
         {
             moveDirection.x = 0;
             moveDirection.z = 0;
@@ -46,6 +55,12 @@ public class PlayerController : MonoBehaviour
             return;
         }
         Control();
+    }
+
+    void OnQPressed()
+    {
+        // TODO: Q 키 기능을 여기에 작성하세요.
+        Debug.Log("Q 사용");
     }
 
     void Control()
